@@ -1,25 +1,23 @@
 package com.salesianostriana.dam.resteval;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Builder;
 
 import java.util.List;
 
+@Builder
 public record GetAllPlacesDto(
 
-        List<GetPlaceDto> placesList
+        int placesCount,
+        List<GetPlaceDto> placeDtoList
 
 ) {
 
-    @Autowired
-    public static GetPlaceDto getPDto;
+    public static GetAllPlacesDto of (List<Place> list){
 
-    /*public GetAllPlacesDto toAllPlacesDto(List<Place> list){
+        return GetAllPlacesDto.builder()
+                .placesCount(list.size())
+                .placeDtoList(list.stream().map(GetPlaceDto::of).toList()).build();
 
-        List<Place> newList = List.of();
-
-        return list.forEach(x -> newList.add(getPDto.toPlaceDto(x)));
-
-    }*/
+    }
 
 }
